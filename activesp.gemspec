@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files += Dir['lib/**/*.rb']
   # s.bindir = "bin"
   # s.executables.push(*(Dir['bin/*.rb']))
-  s.add_dependency('savon-xaop')
+  s.add_dependency('pyu-savon')
   s.add_dependency('nokogiri')
   # s.rdoc_options << '--exclude' << 'ext' << '--main' << 'README'
   # s.extra_rdoc_files = ["README"]
