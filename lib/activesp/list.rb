@@ -91,7 +91,7 @@ module ActiveSP
       folder = options.delete(:folder)
       # Always include a query because for some reason SP is capable of not finding certain
       # items otherwise.
-      query = { "query" => options.delete(:query) || "<Query><Where></Where></Query>" }
+      query = { "query" => options.delete(:query) || "" }
       no_preload = options.delete(:no_preload)
       options.empty? or raise ArgumentError, "unknown options #{options.keys.map { |k| k.inspect }.join(", ")}"
       query_options = Builder::XmlMarkup.new.QueryOptions do |xml|

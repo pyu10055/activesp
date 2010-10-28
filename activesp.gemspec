@@ -1,7 +1,7 @@
 ACTIVESP_VERSION = File.readlines("VERSION")[0][/[\d.]*/]
 
 Gem::Specification.new do |s|
-  s.name = "activesp"
+  s.name = "pyu-activesp"
   s.version = ACTIVESP_VERSION
   s.author = "Peter Vanbroekhoven"
   s.email = "peter@xaop.com"
