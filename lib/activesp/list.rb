@@ -95,7 +95,11 @@ module ActiveSP
       no_preload = options.delete(:no_preload)
       options.empty? or raise ArgumentError, "unknown options #{options.keys.map { |k| k.inspect }.join(", ")}"
       query_options = Builder::XmlMarkup.new.QueryOptions do |xml|
-        xml.Folder(folder == :all ? "" : folder.url) if folder
+	  		if folder
+	  			xml.Folder(folder == :all ? "" : folder.url)
+				else
+	  			xml.QeryOptions
+				end
       end
       if no_preload
         view_fields = Builder::XmlMarkup.new.ViewFields do |xml|
@@ -186,7 +190,7 @@ module ActiveSP
       else
         view_fields = Builder::XmlMarkup.new.ViewFields
       end
-      result = call("Lists", "get_list_item_changes_since_token", "listName" => @id, 'queryOptions' => '<queryOptions xmlns:s="http://schemas.microsoft.com/sharepoint/soap/" ><QueryOptions/></queryOptions>', 'changeToken' => token, 'viewFields' => view_fields)
+      result = call("Lists", "get_list_item_changes_since_token", "listName" => @id, 'queryOptions' => '<QueryOptions xmlns:s="http://schemas.microsoft.com/sharepoint/soap/" ><QueryOptions/></QueryOptions>', 'changeToken' => token, 'viewFields' => view_fields)
       updates = []
       result.xpath("//z:row", NS).each do |row|
         attributes = clean_item_attributes(row.attributes)
@@ -276,7 +280,7 @@ module ActiveSP
     
     # @private
     def __each_item(query_options, query)
-      get_list_items("<ViewFields></ViewFields>", query_options, query) do |attributes|
+      get_list_items("<ViewFields/>", query_options, query) do |attributes|
         yield attributes
       end
     rescue Savon::SOAPFault => e
